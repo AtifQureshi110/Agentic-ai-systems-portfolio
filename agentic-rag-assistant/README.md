@@ -23,10 +23,11 @@ This system simulates a real-world Agentic AI pipeline that:
 
 # gentic Workflow (CORE LOGIC)
 
-START  
-↓  
-Question Classifier  
-↓  
+```text
+START
+  ↓
+Question Classifier
+  ↓
 +----------------------+
 |                      |
 v                      v
@@ -45,6 +46,7 @@ Retriever        Planner Agent
            |
            v
           END
+```
 
 ---
 
