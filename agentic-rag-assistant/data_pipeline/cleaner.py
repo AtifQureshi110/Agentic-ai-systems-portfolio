@@ -1,7 +1,6 @@
 import re
 
-
-def clean_text(text: str) -> str:
+def clean_text(text: str, source_type: str = "text") -> str:
     """
     Clean text for RAG ingestion.
 
@@ -11,7 +10,6 @@ def clean_text(text: str) -> str:
     - Fix PDF extraction artifacts
     - Improve chunking quality
     """
-
     if not text:
         return ""
 
@@ -21,15 +19,11 @@ def clean_text(text: str) -> str:
     # Remove invisible chars
     text = re.sub(r"[\u200b\u200c\u200d\ufeff]", "", text)
 
-    # Fix hyphenated line breaks from PDFs
-    # example:
-    # develop-\nment → development
-    text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)
-
-    # Merge wrapped lines (paragraph preservation)
-    # example:
-    # sentence\ncontinues → sentence continues
-    text = re.sub(r"(?<!\n)\n(?!\n)", " ", text)
+    # Fix hyphenated line breaks from PDFs only
+    if source_type == "pdf":
+        text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)
+        # Merge wrapped lines ONLY for PDFs
+        text = re.sub(r"(?<!\n)\n(?!\n)", " ", text)
 
     # Preserve paragraph separation
     text = re.sub(r"\n{3,}", "\n\n", text)
