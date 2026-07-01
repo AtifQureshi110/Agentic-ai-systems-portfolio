@@ -6,9 +6,7 @@ from docx import Document
 import logging
 from data_pipeline.cleaner import clean_text
 
-
 logger = logging.getLogger(__name__)
-
 # ---------------- WEBSITE LOADER ----------------
 def load_website(url: str) -> str:
     try:
@@ -28,7 +26,6 @@ def load_website(url: str) -> str:
     except Exception as e:
         logger.error(f"Website loading failed: {e}")
         return ""
-
 
 # ---------------- FILE LOADER ----------------
 def load_document(path_or_url: str) -> dict:
@@ -62,7 +59,7 @@ def load_document(path_or_url: str) -> dict:
 
                 doc = Document(path)
 
-                raw_text = "\n".join(
+                raw_text = "\n\n".join(
                     p.text.strip()
                     for p in doc.paragraphs
                     if p.text.strip()
@@ -80,7 +77,7 @@ def load_document(path_or_url: str) -> dict:
                 )
 
         # CLEAN
-        cleaned_text = clean_text(raw_text)
+        cleaned_text = clean_text(raw_text, source_type=file_type)
 
         # RETURN STRUCTURED DATA
         return {
