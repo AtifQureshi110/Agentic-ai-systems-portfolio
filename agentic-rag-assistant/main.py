@@ -1,20 +1,19 @@
 """
-Agentic RAG Assistant — Entry Point
+Agentic RAG Assistant - Entry Point
 Author: Muhammad Atif
 
 Usage:
     Set RUN_INGESTION = True to ingest new sources, then set back to False.
-    URLs and local files are managed separately for clarity.
-    For production ingestion, prefer: python -m maintenance.ingest
+    If a source already exists in Pinecone, user is asked BEFORE any processing begins.
 """
 
 # ================================================================
 # INGESTION CONFIG
 # ================================================================
 
-RUN_INGESTION = False  # ← set True once, then back to False
+RUN_INGESTION = True
 
-# --- Web Sources ---
+# Web Sources
 URLS = [
     # "https://panaversity.org/",
     # "https://panaversity.org/courses",
@@ -22,7 +21,7 @@ URLS = [
     # "https://agentfactory.panaversity.org/",
 ]
 
-# --- Local Files (PDF, DOCX, TXT) ---
+# Local Files (PDF, DOCX, TXT)
 FILES = [
     # "files/project_overview12.docx",
     "files/RAG original paper by Meta.pdf",
@@ -34,44 +33,66 @@ FILES = [
 
 if RUN_INGESTION:
 
-    from data_pipeline.ingestion import ingest_document
+    from data_pipeline.ingestion import ingest_document, normalize_source
+    from vectorstore.pinecone_client import get_all_sources
+
+    print("\nChecking existing sources in Pinecone...\n")
+    existing_sources = get_all_sources()
 
     def ingest_source(source: str):
+
+        normalized = normalize_source(source)
+
+        # CHECK FIRST - before any loading, cleaning, chunking, or embedding
+        if normalized in existing_sources:
+            print(f"\nAlready in Pinecone: {normalized}")
+            user_input = input("Do you want to update it? (yes/no): ").strip().lower()
+
+            if user_input != "yes":
+                print(f"Skipped: {normalized}")
+                return
+
+            print(f"Updating: {normalized}")
+
+        else:
+            print(f"\nNew source detected: {normalized}")
+
+        # PIPELINE RUNS ONLY IF NEW OR USER CONFIRMED UPDATE
         try:
             result = ingest_document(source)
-            doc     = result["metadata"]
-            chunks  = result["chunks"]
-            vectors = result["vectors"]
+            doc    = result["metadata"]
+            chunks = result["chunks"]
 
-            print(f"\n{'='*50}")
+            if not chunks:
+                print(f"Warning: No chunks extracted from {normalized}")
+                return
+
+            print(f"Done")
             print(f"SOURCE   : {doc.get('source')}")
             print(f"TYPE     : {doc.get('type')}")
             print(f"TOKENS   : {doc.get('tokens')}")
             print(f"CHUNKS   : {len(chunks)}")
-            print(f"VECTORS  : {len(vectors)}")
             print(f"UPSERTED : {result['inserted']}")
 
             if chunks:
-                print(f"\nFIRST CHUNK PREVIEW:\n{chunks[0][:300]}")
-
-            print(f"{'='*50}")
+                print(f"PREVIEW  : {chunks[0][:200]}")
 
         except Exception as e:
-            print(f"\n❌ Failed: {source} | {e}")
+            print(f"Failed: {source} | {e}")
 
-    # Ingest URLs
+    # Process Web Sources
     if URLS:
-        print("\n📡 Ingesting Web Sources...\n")
+        print("\nProcessing Web Sources...\n")
         for url in URLS:
             ingest_source(url)
 
-    # Ingest Local Files
+    # Process Local Files
     if FILES:
-        print("\n📁 Ingesting Local Files...\n")
+        print("\nProcessing Local Files...\n")
         for file in FILES:
             ingest_source(file)
 
-    print("\n✅ Ingestion complete.\n")
+    print("\nIngestion complete.\n")
 
 # ================================================================
 # AGENT — QUERY EXECUTION
