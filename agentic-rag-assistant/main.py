@@ -166,5 +166,4 @@ print(question)
 print("\n===== ANSWER =====\n")
 
 print(
-    output["answer"]
-)
+    output["answer"])
