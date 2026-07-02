@@ -161,8 +161,7 @@ run_test(
     test_name        = "Edge - Question with no relevant data",
     question         = "What is the weather in Karachi today?",
     expected_path    = "simple",
-    should_find_answer = False
-)
+    should_find_answer = False)
 
 
 # ================================================================
