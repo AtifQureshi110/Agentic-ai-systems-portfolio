@@ -5,14 +5,10 @@ from pydantic import BaseModel
 class SourceCheckRequest(BaseModel):
     source: str
 
-
-
 # Used for actual ingestion
 class IngestionRequest(BaseModel):
     source: str
     force_update: bool = False
-
-
 
 # Response after ingestion
 class IngestionResponse(BaseModel):
