@@ -1,0 +1,391 @@
+/* ============================================================
+   GLOBAL / BASE
+   ============================================================ */
+
+   html, body, [class*="css"] {
+    background-color: #F5F7FA;
+    color: #1A1D23;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.05rem;
+}
+author-card
+a {
+    color: #1A1D23 !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: #4A5568 !important;
+}
+
+code {
+    background-color: #1A1D23 !important;
+    color: #FFFFFF !important;
+    border-radius: 4px !important;
+    padding: 0.2rem 0.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* ============================================================
+   STREAMLIT LAYOUT OVERRIDES (hide sidebar/header, page padding)
+   ============================================================ */
+[data-testid="stSidebar"] {
+    display: none;
+}
+[data-testid="collapsedControl"] {
+    display: none;
+}
+header[data-testid="stHeader"] {
+    display: none;
+}
+
+.block-container {
+    padding-top: 0rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.block-container {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    padding-top: 1rem !important;
+    max-width: 1200px !important;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    padding: 0.9rem 2.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-radius: 0 0 12px 12px;
+    margin-bottom: 2rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1A1D23;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+a.nav-link {
+    text-decoration: none !important;
+    color: #82888f !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-bottom: none !important;
+    transition: color 0.2s ease;
+}
+
+a.nav-link:hover {
+    color: #1A1D23 !important; 
+    border-bottom: none !important;
+}
+
+a.nav-link.active {
+    color: #1A1D23 !important;
+    font-weight: 700;
+    border-bottom: none !important;
+}
+
+.go-btn {
+    display: inline-block;
+    background-color: #1A1D23;
+    color: white !important;
+    padding: 0.55rem 1.6rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s ease-in-out;
+}
+
+.go-btn:hover {
+    background-color: #33384a;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+    background-color: #FFFFFF;
+    border: 1px solid #E4E7ED;
+    border-left: 4px solid #1A1D23;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.hero h2 {
+    font-size: 1.5rem !important;
+    font-weight: 700;
+    color: #1A1D23;
+    margin: 0 0 0.8rem 0;
+}
+
+.hero p {
+    color: #4A5568 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.9;
+    margin: 0;
+}
+
+.hero .author {
+    margin-top: 1rem;
+    font-size: 0.82rem;
+    color: #718096;
+}
+
+
+
+/* ============================================================
+   FEATURE CARDS ROW (Ingest / Retrieve / Answer — c1, c2, c3)
+   ============================================================ */
+.feature-card {
+    background: #FFFFFF;
+    border: 1px solid #E4E7ED;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A1D23;
+    margin-bottom: 0.5rem;
+}
+
+.feature-desc {
+    font-size: 1.05rem;
+    color: #4A5568;
+    line-height: 1.7;
+}
+
+/* ============================================================
+   COL1 — LANGGRAPH WORKFLOW DIAGRAM
+   ============================================================ */
+
+/* Horizontal split line below classifier */
+.flow-split {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 360px;
+    position: relative;
+    height: 20px;
+}
+
+.flow-split::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 10px;
+    background: #54585f;
+}
+
+.flow-split::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: #54585f;
+}
+
+.flow-split-left::after,
+.flow-split-right::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    width: 2px;
+    height: 10px;
+    background: #54585f;
+}
+
+/* Horizontal merge line above verification */
+.flow-merge {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 360px;
+    position: relative;
+    height: 20px;
+}
+
+.flow-merge::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 10px;
+    background: #54585f;
+}
+
+.flow-merge::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: #54585f;
+}
+
+/* ============================================================
+   COL2 — KEY FEATURES LIST, TECH STACK, AUTHOR CARD
+   ============================================================ */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    font-size: 1.05rem;
+    color: #1A1D23;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.feature-list li::before {
+    content: '✓';
+    color: #1A1D23;
+    font-weight: 700;
+    margin-right: 0.6rem;
+}
+
+.author-card {
+    background: #FFFFFF;
+    border: 1px solid #121213;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.author-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1A1D23;
+    margin-bottom: 0.2rem;
+}
+
+.author-title {
+    font-size: 1rem;
+    color: #0d0d0e;
+    margin-bottom: 1rem;
+}
+
+.author-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.author-link {
+    font-size: 0.95rem !important;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    background: #1A1D23;
+    border: 1px solid #1A1D23;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.author-link:hover {
+    background: #2D3748 !important;
+    color: #FFFFFF !important;
+}
+
+/* ================================
+   Agentic RAG Demo Page
+================================ */
+
+
+.demo-header {
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+
+.demo-header h1 {
+
+    font-size:40px;
+
+    margin-bottom:5px;
+
+}
+
+
+.demo-header p {
+
+    font-size:18px;
+
+    opacity:0.7;
+
+}
+
+
+/* Card spacing */
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+
+    border-radius:18px;
+
+    padding:10px;
+
+}
+
+
+/* Buttons */
+
+.stButton button {
+
+    border-radius:10px;
+
+    height:45px;
+
+    font-weight:600;
+
+}
+
+
+/* Text area */
+
+textarea {
+
+    border-radius:12px !important;
+
+}
