@@ -22,7 +22,7 @@ def normalize_source(source: str) -> str:
         path = parsed.path.rstrip("/")          # keep the path
         return netloc + path if path else netloc # e.g. "panaversity.org/courses"
 
-    return source.replace("www.", "").strip("/")
+    return source.replace("\\", "/").replace("www.", "").strip("/")
 
 # ---------------- INGESTION PIPELINE ----------------
 def ingest_document(source: str):
