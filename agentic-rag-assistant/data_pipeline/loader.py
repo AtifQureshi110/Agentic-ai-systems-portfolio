@@ -31,34 +31,24 @@ def load_website(url: str) -> str:
 def load_document(path_or_url: str) -> dict:
 
     try:
-
         source = path_or_url
         file_type = "website"
 
         # WEBSITE
         if path_or_url.startswith("http"):
-
             raw_text = load_website(path_or_url)
 
         else:
-
             path = Path(path_or_url)
-
             file_type = path.suffix.lower().replace(".", "")
-
             if file_type == "pdf":
-
                 reader = PdfReader(path)
-
-                raw_text = "\n".join(
+                raw_text = "\n".join( 
                     (page.extract_text() or "").strip()
-                    for page in reader.pages
-                )
+                    for page in reader.pages )
 
             elif file_type == "docx":
-
                 doc = Document(path)
-
                 raw_text = "\n\n".join(
                     p.text.strip()
                     for p in doc.paragraphs
@@ -66,31 +56,17 @@ def load_document(path_or_url: str) -> dict:
                 )
 
             elif file_type == "txt":
-
-                raw_text = path.read_text(
-                    encoding="utf-8"
-                )
+                raw_text = path.read_text( encoding="utf-8" )
 
             else:
-                raise ValueError(
-                    f"Unsupported type: {file_type}"
-                )
+                raise ValueError( f"Unsupported type: {file_type}" )
 
         # CLEAN
         cleaned_text = clean_text(raw_text, source_type=file_type)
 
         # RETURN STRUCTURED DATA
-        return {
-            "content": cleaned_text,
-            "source": source,
-            "type": file_type,
-            "tokens": len(cleaned_text.split())
-        }
+        return { "content": cleaned_text, "source": source, "type": file_type, "tokens": len(cleaned_text.split()) }
 
     except Exception as e:
-
-        logger.error(
-            f"Document loading failed: {e}"
-        )
-
+        logger.error( f"Document loading failed: {e}" )
         return {}
