@@ -13,7 +13,6 @@ def load_css(css_path: Path = DEFAULT_CSS_PATH) -> None:
     else:
         st.warning(f"Stylesheet not found at {css_file}")
 
-
 def render_navbar(active_page: str) -> None:
     pages = {"About the Project": "Home", "Live Demo": "Demo"}
 
@@ -32,7 +31,6 @@ def render_navbar(active_page: str) -> None:
         '</div>'
     )
     st.markdown(navbar_html, unsafe_allow_html=True)
-
 
 def render_workflow_diagram() -> None:
     components.html("""
