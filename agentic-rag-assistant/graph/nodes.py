@@ -26,10 +26,11 @@ def classify(state):
 
     return {"query_type": "simple"}
 
+from services.errors import QuotaExceededError
+
 def retrieve(state):
     question = state.question
 
-    # ✅ Vocabulary expansion
     expansion_map = {
         "teachers": "faculty instructors team",
         "teacher": "faculty instructor",
@@ -48,7 +49,11 @@ def retrieve(state):
         top_k += 2
     top_k = min(top_k, 12)
 
-    chunks = query_vectors(question=optimized_query, top_k=top_k)
+    try:
+        chunks = query_vectors(question=optimized_query, top_k=top_k)
+
+    except QuotaExceededError as e:
+        return {"retrieved_docs": [], "answer": str(e)}
 
     if not chunks:
         return {"retrieved_docs": []}
@@ -61,12 +66,8 @@ def retrieve(state):
 
 # ---------------- PLANNER ----------------
 def planner_agent(state):
-
     plan = generate_plan(state.question)
-
-    return {
-        "plan": plan
-    }
+    return { "plan": plan }
 
 # ---------------- VERIFIER ----------------
 def verify(state):
@@ -74,10 +75,7 @@ def verify(state):
     docs = state.retrieved_docs or []
 
     if not docs:
-        return {
-            "is_verified": False,
-            "verification_notes": "No retrieval results"
-        }
+        return { "is_verified": False, "verification_notes": "No retrieval results" }
 
     valid_docs = [
         d for d in docs
@@ -98,25 +96,16 @@ def verify(state):
 
 # ---------------- ANSWER NODE ----------------
 def answer_node(state):
+    if state.answer:  # already set by retrieve() due to quota error
+        return {"answer": state.answer}
 
     chunks = state.retrieved_docs or []
-
     if not chunks:
-        return {
-            "answer": "Not enough information found in documents."
-        }
+        return {"answer": "Not enough information found in documents."}
 
     plan = state.plan
-
     if state.query_type != "complex" or not plan:
         plan = None
 
-    answer = generate_answer(
-        question=state.question,
-        chunks=chunks,
-        plan=plan
-    )
-
-    return {
-        "answer": answer
-    }
+    answer = generate_answer(question=state.question, chunks=chunks, plan=plan)
+    return {"answer": answer}
