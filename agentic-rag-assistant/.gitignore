@@ -2,3 +2,14 @@
 __pycache__/
 *.pyc
 .env
+
+
+# Local backup/copy files
+
+data_pipeline/embedder copy+orignal.py
+data_pipeline/embedder copy02.py
+graph/nodes copy+orginal.py
+services/llm copy+orginal.py
+
+# Interview notes (this file is one folder above this repository)
+interview A_Q for loader.txt
