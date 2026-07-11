@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
 from google import genai
-import os
+import os, time, random
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+from google.genai.errors import ServerError, ClientError
 
 load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -8,8 +11,61 @@ if not API_KEY:
     raise ValueError("GOOGLE_API_KEY not found in .env")
 
 client = genai.Client(api_key=API_KEY)
-
 LLM_MODEL = "gemini-2.5-flash"
+
+class QuotaExceededError(Exception):
+    """Raised when the API quota is genuinely exhausted (not a transient issue)."""
+    pass
+
+def _next_quota_reset_message() -> str:
+    """
+    Gemini free-tier quotas typically reset daily at midnight Pacific Time.
+    Computes a human-readable reset time.
+    """
+    pacific = ZoneInfo("America/Los_Angeles")
+    now_pt = datetime.now(pacific)
+    reset_time = (now_pt + timedelta(days=1)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+    return reset_time.strftime("%B %d, %Y at %I:%M %p Pacific Time")
+
+
+def safe_generate_content(prompt: str, config: dict, max_retries: int = 4):
+    """
+    Wraps client.models.generate_content with:
+    - Exponential backoff retry on 503 (server overload, transient)
+    - Immediate, informative failure on 429 (quota exhausted, not transient)
+    """
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            return client.models.generate_content( model=LLM_MODEL, contents=prompt, config=config )
+
+        except ServerError as e:
+            if getattr(e, "status_code", None) == 503:
+                last_error = e
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                print(f"[retry] Server busy (503). Retrying in {wait_time:.1f}s "
+                      f"(attempt {attempt + 1}/{max_retries})...")
+                time.sleep(wait_time)
+                continue
+            raise
+
+        except ClientError as e:
+            if getattr(e, "status_code", None) == 429:
+                reset_msg = _next_quota_reset_message()
+                raise QuotaExceededError(
+                    f"Your free trial quota has been used up for today. "
+                    f"You can try again after {reset_msg}."
+                ) from e
+            raise
+
+    raise ServerError(
+        getattr(last_error, "status_code", 503),
+        {"error": {"message": "Server still unavailable after retries."}},
+        None,
+    )
 
 
 # ================================================================
@@ -95,16 +151,19 @@ QUESTION:
 Return ONLY the plan text or "No plan needed". Nothing else.
 """
 
-    response = client.models.generate_content(
-        model=LLM_MODEL,
-        contents=prompt,
-        config={
-            "temperature": 0.05,
-            "max_output_tokens": 200
-        }
-    )
+    try:
+        response = safe_generate_content(
+            prompt,
+            config={
+                "temperature": 0.05,
+                "max_output_tokens": 200
+            }
+        )
+        return response.text.strip()
 
-    return response.text.strip()
+    except QuotaExceededError as e:
+        # Bubble up a clean, user-facing message instead of crashing.
+        return str(e)
 
 
 # ================================================================
@@ -187,10 +246,12 @@ YOUR ANSWER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-    response = client.models.generate_content(
-        model=LLM_MODEL,
-        contents=prompt,
-        config={"temperature": 0.3}
-    )
+    try:
+        response = safe_generate_content(
+            prompt,
+            config={"temperature": 0.3}
+        )
+        return response.text.strip()
 
-    return response.text.strip()
+    except QuotaExceededError as e:
+        return str(e)
