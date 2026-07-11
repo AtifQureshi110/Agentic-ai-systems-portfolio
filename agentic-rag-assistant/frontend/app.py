@@ -4,7 +4,6 @@ from api.client import (check_source,ingest_source)
 import streamlit as st
 import os, sys
 from api.client import ask_ai
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # ================================================================
@@ -22,9 +21,7 @@ st.set_page_config(
 
 # Load CSS once, using the real loader — reads frontend/assets/style.css
 load_css()
-
 active_page = st.query_params.get("page", "About the Project")
-
 render_navbar(active_page)
 
 # ================================================================
@@ -32,21 +29,11 @@ render_navbar(active_page)
 # ================================================================
 
 def clear_source_state():
-
-    keys = [
-        "source",
-        "source_check",
-        "document_uploader",
-        "url_input"
-    ]
-
+    keys = [ "source", "source_check", "document_uploader", "url_input" ]
     for key in keys:
         st.session_state.pop(key, None)
-
     st.rerun()
-
 if active_page == "About the Project":
-
     # Hero section
     st.markdown("""
     <div class="hero">
@@ -102,7 +89,7 @@ if active_page == "About the Project":
             <div class="author-links">
                 <a class="author-link" href="https://github.com/AtifQureshi110" target="_blank">⬡ GitHub</a>
                 <a class="author-link" href="https://www.youtube.com/@AIDevCorner" target="_blank">▶ YouTube</a>
-                <a class="author-link" href="https://www.linkedin.com/in/your-linkedin" target="_blank">in LinkedIn</a>
+                <a class="author-link" href="https://www.linkedin.com/in/matif110/" target="_blank">in LinkedIn</a>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -139,9 +126,7 @@ elif active_page == "Live Demo":
             if source:
                 st.session_state["source"] = source
                 with st.spinner("🔍 Checking knowledge base..."):
-                    result = check_source(
-                        source
-                    )
+                    result = check_source( source )
                 st.session_state["source_check"] = result
             # -----------------------------
             # SOURCE STATUS
@@ -156,47 +141,30 @@ elif active_page == "Live Demo":
 
                     col1, col2 = st.columns(2)
 
-
                     # UPDATE BUTTON
-
                     with col1:
                         if st.button("🔄 Update",use_container_width=True,key="update_source"):
-
                             with st.spinner("Updating knowledge base..."):
-
                                 response = ingest_source(st.session_state["source"],force_update=True)
-
                             if response["success"]:
-
                                 st.success("✅ Knowledge base updated successfully")
                                 clear_source_state()
-
                             else:
                                 st.error(response["message"])
-
                     # CANCEL BUTTON
                     with col2:
-
                         if st.button("❌ Cancel",use_container_width=True,key="cancel_source"):
-
                             clear_source_state()
                             st.success("✅ Operation cancelled")
                 # New source
-
                 else:
                     st.success("✅ New source detected")
-
                     if st.button("🚀 Start Processing",use_container_width=True,key="start_ingestion"):
-
                         with st.spinner("Processing document..."):
-
                             response = ingest_source(st.session_state["source"],force_update=False)
-
                         if response["success"]:
-
                             st.success("🎉 Document added successfully")
                             clear_source_state()
-
                         else:
                             st.error(response["message"])
 
@@ -291,9 +259,7 @@ elif active_page == "Live Demo":
             # -----------------------------
             # CHAT INPUT
             # -----------------------------
-            question = st.chat_input(
-                "Ask something about your documents..."
-            )
+            question = st.chat_input( "Ask something about your documents..." )
 
             # -----------------------------
             # PROCESS QUESTION (two-phase rerun)
@@ -302,7 +268,7 @@ elif active_page == "Live Demo":
             if question:
                 # Phase 1: save the question, mark it pending, rerun immediately
                 st.session_state.messages.append(
-                    {"role": "user", "content": question}
+                    { "role": "user", "content": question }
                 )
                 st.session_state.pending_question = question
                 st.rerun()
@@ -314,8 +280,6 @@ elif active_page == "Live Demo":
                 response = ask_ai(q)
                 answer = response.get("answer", "No answer received.")
 
-                st.session_state.messages.append(
-                    {"role": "assistant", "content": answer}
-                )
+                st.session_state.messages.append( {"role": "assistant", "content": answer} )
                 st.session_state.pending_question = None
                 st.rerun()
