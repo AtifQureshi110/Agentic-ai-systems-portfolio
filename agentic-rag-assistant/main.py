@@ -171,14 +171,6 @@
 
 
 from backend.services.query_service import ask_question
-
-
 question = "What is RAG?"
-
-
-answer = ask_question(
-    question
-)
-
-
+answer = ask_question( question )
 print(answer)
