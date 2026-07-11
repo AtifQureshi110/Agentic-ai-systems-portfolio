@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 # Used for checking existing source
 class SourceCheckRequest(BaseModel):
     source: str
