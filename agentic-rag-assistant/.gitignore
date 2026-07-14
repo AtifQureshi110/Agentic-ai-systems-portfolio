@@ -13,4 +13,6 @@ services/llm copy+orginal.py
 
 # Interview notes (this file is one folder above this repository)
 interview A_Q for loader.txt
-schemas/interview question.txt
+backend/interview question.txt
+
+frontend\important insturction for frontend.txt
