@@ -88,7 +88,7 @@ if active_page == "About the Project":
             <div class="author-title">AI/ML Engineer</div>
             <div class="author-links">
                 <a class="author-link" href="https://github.com/AtifQureshi110?tab=repositories" target="_blank">⬡ GitHub</a>
-                <a class="author-link" href="https://www.youtube.com/@AIDevCorner" target="_blank">▶ YouTube</a>
+                <a class="author-link" href="https://www.youtube.com/@AICornerOfficial110" target="_blank">▶ YouTube</a>
                 <a class="author-link" href="https://www.linkedin.com/in/matif110/" target="_blank">in LinkedIn</a>
             </div>
         </div>
