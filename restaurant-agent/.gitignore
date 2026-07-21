@@ -2,9 +2,10 @@
 __pycache__/
 *.pyc
 .env
-
+*.db
 
 
 
 # Interview notes (this file is one folder above this repository)
 project all information.docx
+
