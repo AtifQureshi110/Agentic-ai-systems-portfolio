@@ -21,7 +21,7 @@ def _embed_with_retry(chunk, max_retries: int = 3):
                     f"You've used all your free messages for today. Try again after {reset_msg}."
                 ) from e
             raise
-
+	
         except ServerError as e:
             wait_time = (2 ** attempt) + random.uniform(0, 1)
             logger.warning(f"Embedding attempt {attempt+1} failed: {e}. Retrying in {wait_time:.1f}s...")

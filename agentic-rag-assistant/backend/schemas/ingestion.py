@@ -15,3 +15,4 @@ class IngestionResponse(BaseModel):
     message: str
     inserted: int
     source: str
+

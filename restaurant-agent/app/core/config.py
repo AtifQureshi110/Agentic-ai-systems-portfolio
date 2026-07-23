@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     gemini_api_key: str = Field(..., alias="GOOGLE_API_KEY")
     gemini_model: str = Field("gemini-2.0-flash", alias="GEMINI_MODEL")
     gemini_temperature: float = Field(0.3, alias="GEMINI_TEMPERATURE")
+    gemini_embed_model: str = Field("models/gemini-embedding-001", alias="GEMINI_EMBED_MODEL")
+    embedding_dimension: int = Field(768, alias="EMBEDDING_DIMENSION")
 
     # --- Pinecone ---
     pinecone_api_key: str = Field(..., alias="PINECONE_API_KEY")

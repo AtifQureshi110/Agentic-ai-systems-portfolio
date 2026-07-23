@@ -67,7 +67,6 @@ def safe_generate_content(prompt: str, config: dict, max_retries: int = 4):
         None,
     )
 
-
 # ================================================================
 #  PLANNER
 #  Role: decide HOW to retrieve — never answers the question
@@ -152,19 +151,12 @@ Return ONLY the plan text or "No plan needed". Nothing else.
 """
 
     try:
-        response = safe_generate_content(
-            prompt,
-            config={
-                "temperature": 0.05,
-                "max_output_tokens": 200
-            }
-        )
+        response = safe_generate_content( prompt, config={ "temperature": 0.05, "max_output_tokens": 200 } )
         return response.text.strip()
 
     except QuotaExceededError as e:
         # Bubble up a clean, user-facing message instead of crashing.
         return str(e)
-
 
 # ================================================================
 #  ANSWER GENERATOR

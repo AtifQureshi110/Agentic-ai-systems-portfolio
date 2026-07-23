@@ -146,31 +146,6 @@ def delete_by_source(source: str):
         }
     )
 
-# def get_all_sources():
-#     """
-#     Returns unique document sources from Pinecone metadata.
-#     """
-
-#     stats = index.describe_index_stats()
-
-#     # NOTE: Pinecone does not directly return all metadata,
-#     # so we must query a sample OR use namespace strategy.
-
-#     query_result = index.query(
-#         vector=[0] * 3072,  # dummy vector (match your embedding dim)
-#         top_k=1000,
-#         include_metadata=True
-#     )
-
-#     sources = set()
-
-#     for match in query_result["matches"]:
-#         meta = match.get("metadata", {})
-#         if "source" in meta:
-#             sources.add(meta["source"])
-
-#     return list(sources)
-
 def get_all_sources():
 
     query_result = index.query(
