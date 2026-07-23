@@ -9,7 +9,8 @@ import json
 from datetime import date
 
 from app.agent.state import AgentState, SlotName
-from app.agent.prompts import CLASSIFY_AND_EXTRACT_PROMPT
+# from app.agent.prompts import CLASSIFY_AND_EXTRACT_PROMPT
+from app.agent.prompts.router_prompt import CLASSIFY_AND_EXTRACT_PROMPT
 from app.core.llm import llm
 
 
