@@ -1,0 +1,183 @@
+==============================
+Restaurant FAQ & Policies
+==============================
+
+Q: What are your opening hours?
+A: Most restaurants are open daily from 11:00 AM to 11:00 PM.
+
+Q: Are opening hours different on holidays?
+A: Yes. Some restaurants may have adjusted hours on public holidays.
+
+Q: Can I reserve a table online?
+A: Yes. Customers can reserve tables through our online reservation system.
+
+Q: Can I reserve a table by phone?
+A: Yes. Reservations can be made by phone or through the online system.
+
+Q: Is there any reservation fee?
+A: No. Table reservations are completely free.
+
+Q: How far in advance can I book a table?
+A: Reservations can be made up to 30 days in advance.
+
+Q: Can I reserve a table for today?
+A: Yes, subject to table availability.
+
+Q: How many people can a table accommodate?
+A: Tables are available for 2, 4, 6, and 8 guests.
+
+Q: Can I reserve multiple tables?
+A: Yes. Multiple tables can be reserved for large groups.
+
+Q: Can I book a table for a large group?
+A: Yes. Group reservations are available depending on table availability.
+
+Q: Is a deposit required for large group bookings?
+A: Yes. Groups above a certain size may be asked to pay a deposit to confirm the reservation.
+
+Q: Is a service charge added to the bill?
+A: Some restaurants add a service charge for larger groups; this is usually mentioned at the time of booking.
+
+Q: Can I book a private event?
+A: Yes. Selected restaurants offer private dining and event bookings.
+
+Q: Can I book a birthday party?
+A: Yes. Birthday reservations are available.
+
+Q: Can I book a business meeting?
+A: Yes. Restaurants welcome corporate reservations.
+
+Q: Can I modify my reservation?
+A: Yes. Reservations can be modified before the scheduled time.
+
+Q: Can I cancel my reservation?
+A: Yes. Reservations can be cancelled up to 2 hours before the reservation time.
+
+Q: What is your refund policy?
+A: Refunds are issued for cancelled orders or reservations according to restaurant policy, usually within 5-7 business days.
+
+Q: Is there a no-show fee?
+A: Some restaurants may charge a no-show fee for large group reservations that are not cancelled in advance.
+
+Q: What happens if I arrive late?
+A: Your table will be held for 15 minutes after the reserved time.
+
+Q: What happens if I do not arrive?
+A: The reservation will be marked as a no-show and the table may be released.
+
+Q: How do I know if a table is available?
+A: The reservation system checks table availability in real time.
+
+Q: Can I request a window seat?
+A: Yes. Special seating requests are accepted but cannot be guaranteed.
+
+Q: Can I choose a specific table?
+A: Table preferences can be requested but depend on availability.
+
+Q: Do restaurants provide takeaway?
+A: Yes. Most restaurants offer takeaway services.
+
+Q: Do restaurants provide home delivery?
+A: Many restaurants offer home delivery depending on the location.
+
+Q: How can I check if delivery is available?
+A: Delivery availability depends on the restaurant and delivery area.
+
+Q: Can I order food without a reservation?
+A: Yes. Reservations are not required for food orders.
+
+Q: What payment methods are accepted?
+A: Cash, debit cards, credit cards, and digital wallets are accepted.
+
+Q: Can I pay online?
+A: Yes. Online payment is available for supported restaurants.
+
+Q: Are taxes included in menu prices?
+A: Taxes are calculated according to local regulations and may appear during checkout.
+
+Q: Do menu prices change seasonally?
+A: Yes. Some restaurants update menu prices and items seasonally based on ingredient availability.
+
+Q: Do restaurants offer discounts?
+A: Selected restaurants provide seasonal promotions and discounts.
+
+Q: Is tipping expected?
+A: Tipping is optional and at the customer's discretion unless a service charge is already included.
+
+Q: Do restaurants have vegetarian dishes?
+A: Yes. Vegetarian options are available at most restaurants.
+
+Q: Do restaurants serve vegan food?
+A: Many restaurants include vegan menu items.
+
+Q: Are gluten-free meals available?
+A: Some restaurants offer gluten-free dishes.
+
+Q: Are halal meals available?
+A: Availability depends on the restaurant's menu.
+
+Q: How do you handle food allergies?
+A: Customers can inform the restaurant of any allergies, and staff will advise on suitable menu items.
+
+Q: Can I view the menu before visiting?
+A: Yes. Menus are available online.
+
+Q: Can I search food by category?
+A: Yes. Menu items can be filtered by category.
+
+Q: Can I search menu items by price?
+A: Yes. Food items can be searched by price range.
+
+Q: Can I see restaurant ratings?
+A: Yes. Ratings are displayed for every restaurant.
+
+Q: Can I leave a review?
+A: Yes. Customers can submit ratings and reviews after their visit.
+
+Q: Can I search restaurants by cuisine?
+A: Yes. Restaurants can be searched by cuisine such as Indian, Chinese, Italian, Thai, American, and Mexican.
+
+Q: Can I search restaurants by location?
+A: Yes. Restaurants can be searched by city or location.
+
+Q: Can I book restaurants in different cities?
+A: Yes. Restaurants are available in multiple cities including Manchester, Leeds, Birmingham, Bristol, London, and Liverpool.
+
+Q: Is parking available?
+A: Parking availability depends on the restaurant.
+
+Q: Do restaurants provide free Wi-Fi?
+A: Many restaurants offer complimentary Wi-Fi.
+
+Q: Is there a dress code?
+A: Dress code policies vary by restaurant; casual attire is generally accepted unless stated otherwise.
+
+Q: Is the restaurant wheelchair accessible?
+A: Most restaurants offer wheelchair accessible entrances and seating; availability may vary by location.
+
+Q: Are pets allowed?
+A: Pet policies vary by restaurant.
+
+Q: Are children welcome?
+A: Yes. Restaurants are family friendly.
+
+Q: Do restaurants have children's menus?
+A: Many restaurants offer children's meals.
+
+Q: Can I bring my own cake?
+A: Some restaurants allow outside cakes for celebrations. Please contact the restaurant in advance.
+
+Q: How can I contact a restaurant?
+A: Restaurant contact information is available on the restaurant profile.
+
+Q: Can I reorder a previous meal?
+A: Yes. Previous orders can be viewed and reordered if available.
+
+Q: How do I report an issue with my order?
+A: Contact customer support through the application or restaurant contact details.
+
+Q: Can I request special cooking instructions?
+A: Yes. Special requests can be added during ordering, subject to restaurant approval.
+
+Q: Does the system show restaurants with table booking?
+A: Yes. Restaurants supporting table reservations are displayed accordingly.
