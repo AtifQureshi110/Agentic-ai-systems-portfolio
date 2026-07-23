@@ -21,8 +21,7 @@ Given the user's message, return ONLY a JSON object (no markdown, no explanation
     "phone": string or null,
     "reservation_date": string or null,   // ISO format YYYY-MM-DD, or null if not mentioned
     "reservation_time": string or null,   // 24hr HH:MM, or null if not mentioned
-    "party_size": integer or null
-  }}
+    "party_size": integer or null  }}
 }}
 
 Rules:
