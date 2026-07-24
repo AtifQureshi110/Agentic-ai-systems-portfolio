@@ -1,0 +1,33 @@
+
+
+
+========================================= database.py =============================================
+
+Set up the SQL Server connection layer using SQLAlchemy + pyodbc. 
+Reads a single DATABASE_URL connection string from app.core.config.settings (via pydantic-settings), 
+then creates the SQLAlchemy engine with pool_pre_ping=True so it recovers from dropped connections 
+instead of failing, and fast_executemany=True for faster bulk inserts through pyodbc. Also defines 
+the SessionLocal factory and a get_db() generator that FastAPI can use as a dependency — 
+it yields a session and guarantees it's closed after each request, even on error. 
+Everything else in the app (models, crud, tools) plugs into this same engine/session setup.
+
+========================================= models.py =============================================
+
+Defined the SQLAlchemy models for the restaurant agent: 
+Menu (name, category, price, description, availability flag), 
+Table (table number, capacity), 
+and Reservation (customer name, phone, date, time, party size, foreign key to Table, 
+and a status enum — pending/confirmed/cancelled/completed). Kept the relationship one-directional
+and simple — a Table can have many Reservations — since the project only needs table-level booking, 
+not per-item ordering. These three models map directly to the structured data the agent needs
+(as opposed to the FAQ/policy content,
+which lives in Pinecone instead of SQL Server).
+
+========================================= crud.py =============================================
+
+Wrote the CRUD layer (crud.py) that sits between the SQLAlchemy models and the agent's tools.
+Exposes clean functions — get_menu_items(), check_availability(), create_reservation(), 
+get_table_by_id() — so the tools layer never touches SQLAlchemy queries directly. 
+check_availability() filters out tables already booked for a given date/time,
+and create_reservation() auto-picks the smallest free table that fits the party size,
+with validation to block double-booking.
