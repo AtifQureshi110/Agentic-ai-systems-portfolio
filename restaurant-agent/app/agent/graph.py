@@ -1,28 +1,3 @@
-# """
-# LangGraph StateGraph for the restaurant reservation agent.
-
-# This file only wires nodes and edges together.
-# Node logic lives in app/agent/nodes/.
-# """
-
-# from langgraph.graph import StateGraph, END
-
-# from app.agent.state import AgentState
-# from app.agent.nodes.intent_router import classify_and_extract_node
-
-
-# def build_graph():
-#     workflow = StateGraph(AgentState)
-
-#     workflow.add_node("classify_and_extract", classify_and_extract_node)
-
-#     workflow.set_entry_point("classify_and_extract")
-#     workflow.add_edge("classify_and_extract", END)  # temporary, until more nodes exist
-
-#     return workflow.compile()
-
-
-
 """
 LangGraph StateGraph for the restaurant reservation agent.
 
@@ -48,6 +23,7 @@ from app.agent.nodes.rag_node import rag_node
 from app.agent.nodes.menu_node import menu_node
 from app.agent.nodes.reservation_node import reservation_node
 from app.agent.nodes.response_node import response_node
+from app.memory.checkpointer import checkpointer
 
 
 def route_after_classification(state: AgentState) -> str:
@@ -90,4 +66,4 @@ def build_graph():
     workflow.add_edge("reservation_node", "response_node")
     workflow.add_edge("response_node", END)
 
-    return workflow.compile()
+    return workflow.compile(checkpointer=checkpointer)
