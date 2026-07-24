@@ -26,8 +26,8 @@ def reservation_node(state: AgentState) -> AgentState:
             return {**state, "tool_result": {"status": "missing_slots", "missing": needed_for_check}}
 
         result = availability_check.invoke({
-            "reservation_date": slots["reservation_date"],
-            "reservation_time": slots["reservation_time"],
+            "date": slots["reservation_date"],
+            "time": slots["reservation_time"],
             "party_size": slots["party_size"],
         })
         return {**state, "tool_result": result}
@@ -40,8 +40,8 @@ def reservation_node(state: AgentState) -> AgentState:
         result = reservation_create.invoke({
             "customer_name": slots["customer_name"],
             "phone": slots["phone"],
-            "reservation_date": slots["reservation_date"],
-            "reservation_time": slots["reservation_time"],
+            "date": slots["reservation_date"],
+            "time": slots["reservation_time"],
             "party_size": slots["party_size"],
         })
         return {**state, "tool_result": result}
