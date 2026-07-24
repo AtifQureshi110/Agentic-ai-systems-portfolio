@@ -8,7 +8,6 @@ Exposed as a LangChain/LangGraph-callable tool: `faq_lookup`.
 import logging
 
 from langchain_core.tools import tool
-
 from app.retrieval.embeddings import embed_text
 from app.retrieval.pinecone_client import get_index
 
