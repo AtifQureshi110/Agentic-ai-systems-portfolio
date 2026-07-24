@@ -8,7 +8,7 @@ this result into a natural reply, using ONE LLM call.
 """
 
 from app.agent.state import AgentState
-from app.tools.faq_lookup import faq_lookup
+from app.tools.faq_tool import faq_lookup
 
 
 def rag_node(state: AgentState) -> AgentState:
