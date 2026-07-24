@@ -15,7 +15,6 @@ def get_llm() -> ChatGoogleGenerativeAI:
         model=settings.gemini_model,
         google_api_key=settings.gemini_api_key,
         temperature=settings.gemini_temperature,
-        # transport="rest",
     )
 
 
