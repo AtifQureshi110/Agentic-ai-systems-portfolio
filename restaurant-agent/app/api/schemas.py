@@ -1,57 +1,64 @@
 """
 Pydantic request/response models for app/api/.
 
-Kept separate from app/agent/state.py on purpose:
-state.py is the internal LangGraph state (can change freely as the graph evolves),
-these are the external HTTP contract (should change rarely, on purpose).
+Two groups:
+1. Chat models (used by routes_chat.py) - talk to the LangGraph agent.
+2. Reservation/Availability models (used by routes_reservation.py) - talk
+   directly to app.tools.reservation_create / app.tools.availability_check,
+   bypassing the agent, for a structured non-chat way to hit booking logic.
 """
 
-from typing import Optional, Any, Dict
+from typing import Any, Optional
+
 from pydantic import BaseModel, Field
 
 
-# ---------- Chat (goes through the LangGraph agent) ----------
+# ---------------------------------------------------------------------------
+# Chat models
+# ---------------------------------------------------------------------------
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., description="User's chat message")
-    thread_id: str = Field(..., description="Conversation/session id, required so LangGraph memory persists")
+    message: str
+    thread_id: str
 
 
 class ChatResponse(BaseModel):
-    reply: str = Field(..., description="Final natural-language reply from response_node")
+    reply: str
     thread_id: str
-    # Optional debug info. Keep Optional so routes_chat.py can omit it
-    # without breaking the response model.
-    state: Optional[Dict[str, Any]] = Field(
-        default=None,
-        description="Optional snapshot of slots/intent/etc. for debugging. Populate only if easy to grab from graph output.",
-    )
+    # Optional debug info - current extracted slots / intent, useful while
+    # testing the agent from Swagger UI or Streamlit dev mode.
+    intent: Optional[str] = None
+    slots: Optional[dict[str, Any]] = None
+    missing_slots: Optional[list[str]] = None
 
 
-# ---------- Direct REST endpoints (bypass the agent, call tools directly) ----------
-
-class AvailabilityRequest(BaseModel):
-    date: str = Field(..., description="Reservation date, e.g. 2026-07-24")
-    time: str = Field(..., description="Reservation time, e.g. 19:30")
-    party_size: int = Field(..., gt=0)
-
-
-class AvailabilityResponse(BaseModel):
-    available: bool
-    details: Optional[Dict[str, Any]] = None
-
+# ---------------------------------------------------------------------------
+# Direct reservation models (bypass the agent)
+# ---------------------------------------------------------------------------
 
 class ReservationRequest(BaseModel):
     customer_name: str
     phone: str
     date: str
     time: str
-    party_size: int = Field(..., gt=0)
+    party_size: int
     table_id: Optional[int] = None
 
 
 class ReservationResponse(BaseModel):
     success: bool
+    message: str
     reservation_id: Optional[int] = None
-    details: Optional[Dict[str, Any]] = None
-    message: Optional[str] = None
+    details: Optional[dict[str, Any]] = None
+
+
+class AvailabilityRequest(BaseModel):
+    date: str
+    time: str
+    party_size: int
+
+
+class AvailabilityResponse(BaseModel):
+    available: bool
+    message: str
+    available_tables: Optional[list[dict[str, Any]]] = None
