@@ -48,8 +48,6 @@ class ReservationRequest(BaseModel):
 class ReservationResponse(BaseModel):
     success: bool
     message: str
-    reservation_id: Optional[int] = None
-    details: Optional[dict[str, Any]] = None
 
 
 class AvailabilityRequest(BaseModel):
@@ -59,6 +57,4 @@ class AvailabilityRequest(BaseModel):
 
 
 class AvailabilityResponse(BaseModel):
-    available: bool
     message: str
-    available_tables: Optional[list[dict[str, Any]]] = None
