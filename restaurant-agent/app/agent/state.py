@@ -40,3 +40,4 @@ class AgentState(TypedDict):
     missing_slots: List[SlotName]
     tool_result: Optional[dict]
     response: Optional[str]
+    last_reservation: Optional[str]
