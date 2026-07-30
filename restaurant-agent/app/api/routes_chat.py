@@ -49,4 +49,5 @@ async def chat(request: ChatRequest) -> ChatResponse:
         intent=result.get("intent"),
         slots=result.get("slots"),
         missing_slots=result.get("missing_slots"),
+        tool_result=result.get("tool_result"),  
     )
