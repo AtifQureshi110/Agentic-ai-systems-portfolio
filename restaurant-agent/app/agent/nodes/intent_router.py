@@ -53,6 +53,12 @@ def classify_and_extract_node(state: AgentState) -> AgentState:
     )
 
     raw_response = llm.invoke(prompt).content
+    # Some models return content as a list of parts instead of a plain string
+    if isinstance(raw_response, list):
+        raw_response = "".join(
+            part if isinstance(part, str) else part.get("text", "")
+            for part in raw_response
+        )
     cleaned = raw_response.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     parsed = json.loads(cleaned)
 
@@ -60,8 +66,9 @@ def classify_and_extract_node(state: AgentState) -> AgentState:
     missing = [s for s in ALL_SLOTS if new_slots.get(s) is None]
 
     return {
-        **state,
-        "intent": parsed["intent"],
-        "slots": new_slots,
-        "missing_slots": missing,
-    }
+            **state,
+            "intent": parsed["intent"],
+            "slots": new_slots,
+            "missing_slots": missing,
+            "tool_result": None,   # ADD THIS — clears last turn's stale result
+        }
