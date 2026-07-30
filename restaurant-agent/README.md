@@ -156,3 +156,18 @@ restaurant-agent/
 ├── requirements.txt
 └── README.md
 ```
+
+
+---
+
+# Author
+
+**Muhammad Atif**
+
+AI/ML Engineer focused on:
+
+- Agentic AI Systems
+- Retrieval-Augmented Generation (RAG)
+- LangGraph Workflows
+- LLM Application Development
+- AI Engineering & Data Systems
