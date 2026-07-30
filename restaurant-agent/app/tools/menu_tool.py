@@ -61,4 +61,4 @@ def menu_lookup(category: Optional[str] = None) -> str:
 #     print(menu_lookup.invoke({}))
 #     print()
 #     print("=== Live check: filtered by category ===")
-    print(menu_lookup.invoke({"category": "Pizza"}))
+#    print(menu_lookup.invoke({"category": "Pizza"}))
