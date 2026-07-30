@@ -19,6 +19,7 @@
     --font-body: 'Manrope', -apple-system, sans-serif;
 
     --navbar-height: 72px;
+    --chat-width: 800px;          /* single source of truth for centering */
 }
 
 /* ---------------- Base page ---------------- */
@@ -34,7 +35,8 @@ html, body, [data-testid="stAppViewContainer"] {
 
 [data-testid="stAppViewContainer"] .main .block-container {
     padding-top: calc(var(--navbar-height) + 2.5rem) !important;
-    max-width: 100%;
+    max-width: var(--chat-width) !important;
+    margin: 0 auto !important;
 }
 
 /* Hide default Streamlit chrome we don't want */
@@ -160,6 +162,10 @@ html, body, [data-testid="stAppViewContainer"] {
     max-width: 620px;
 }
 
+.hero {
+    margin-bottom: 2.5rem;
+}
+
 .section {
     margin-top: 3.5rem;
 }
@@ -268,6 +274,124 @@ html, body, [data-testid="stAppViewContainer"] {
     color: var(--color-rust) !important;
 }
 
+/* ---------------- Chat messages (Live Demo page) ---------------- */
+[data-testid="stChatMessage"] {
+    background: var(--color-surface);
+    border: 1px solid var(--color-gold);   /* same color for both user and assistant */
+    border-radius: 14px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.75rem;
+    max-width: 75%;
+}
+
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    background: var(--color-surface-raised);
+    margin-left: auto;
+}
+
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+    margin-right: auto;
+}
+
+[data-testid="stChatMessage"] p {
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Remove the round avatar icons entirely */
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"] {
+    display: none !important;
+}
+
+/* Reserve space so the last message isn't hidden behind the fixed input bar,
+   and keep the message list itself centered to the same width as the input bar */
+[data-testid="stChatMessageContainer"],
+[data-testid="stVerticalBlock"]:has([data-testid="stChatMessage"]) {
+    max-width: var(--chat-width) !important;
+    margin: 0 auto !important;
+    padding-bottom: 6rem;
+}
+
+/* ---------------- Chat input bar (Live Demo page) — centered, ONE clear border ---------------- */
+[data-testid="stBottom"],
+[data-testid="stBottom"] > div,
+[data-testid="stChatInput"] {
+    background: var(--color-bg) !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+[data-testid="stBottom"] > div {
+    max-width: var(--chat-width) !important;
+    margin: 0 auto !important;
+}
+
+
+[data-testid="stChatInput"] {
+    padding: 0.5rem 0 0.5rem !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+[data-testid="stChatInput"] > div {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+    background: var(--color-bg) !important;
+    border: 1px solid var(--color-gold) !important;
+    border-radius: 10px !important;
+    padding: 0.4rem 0.6rem !important;
+    width: 75% !important;
+    /* max-width: 700px !important;*/  /*  caps the box so it doesn't span full page */
+    margin: 0 auto !important;
+}
+
+[data-testid="stChatInput"] [data-baseweb="textarea"],
+[data-testid="stChatInput"] [data-baseweb="base-input"] {
+    background: var(--color-bg) !important;
+    border: none !important;
+}
+
+[data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    color: var(--color-text) !important;
+    caret-color: var(--color-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 1.1rem !important;
+    padding: 0.5rem !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+[data-testid="stChatInput"] textarea:focus {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+[data-testid="stChatInput"] textarea::placeholder {
+    color: var(--color-text-muted) !important;
+}
+
+[data-testid="stChatInput"] button {
+    background: var(--color-gold) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+[data-testid="stChatInput"] button svg {
+    fill: var(--color-bg) !important;
+}
+
 /* ---------------- Responsive ---------------- */
 @media (max-width: 640px) {
     .navbar-inner { padding: 0 1rem; }
@@ -277,4 +401,25 @@ html, body, [data-testid="stAppViewContainer"] {
     .author-card { padding: 1.25rem; }
     .author-title { flex-basis: 100%; margin-right: 0; margin-bottom: 0.25rem; }
     .author-links { flex-basis: 100%; }
+}
+
+/* ---------------- st.status() widget — match page theme ---------------- */
+[data-testid="stExpander"] {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stExpander"] summary {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+}
+
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+}
+
+[data-testid="stExpander"] svg {
+    fill: var(--color-gold) !important;
 }
