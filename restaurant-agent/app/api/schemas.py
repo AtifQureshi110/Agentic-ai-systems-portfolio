@@ -30,6 +30,7 @@ class ChatResponse(BaseModel):
     intent: Optional[str] = None
     slots: Optional[dict[str, Any]] = None
     missing_slots: Optional[list[str]] = None
+    tool_result: Optional[Any] = None   # ADD THIS — temporary debug field
 
 
 # ---------------------------------------------------------------------------
