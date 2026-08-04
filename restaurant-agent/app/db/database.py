@@ -1,17 +1,3 @@
-"""
-SQL Server connection setup using SQLAlchemy + pyodbc.
-
-Reads the connection string from app.core.config.settings.database_url.
-
-Set DATABASE_URL in your .env like this (adjust server name for your setup):
-
-    DATABASE_URL=mssql+pyodbc://@localhost\SQLEXPRESS/restaurant_agent?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes
-
-If you use SQL login (username/password) instead of Windows Authentication:
-
-    DATABASE_URL=mssql+pyodbc://username:password@localhost/restaurant_agent?driver=ODBC+Driver+17+for+SQL+Server
-"""
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
